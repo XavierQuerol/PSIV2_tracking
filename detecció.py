@@ -76,6 +76,7 @@ class Repte2():
                         c.trajec.append(nou_centre)
                         self.cotxes[0] = c
                         self.anterior.append((nou_centre, 0))
+                        cv2.putText(frame, str(0), (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, 255, 2)
 
                     else:
                         for (centre,id_a) in self.anterior:
@@ -83,6 +84,7 @@ class Repte2():
                             if abs(self.dist_cent(nou_centre,centre)) < 180: 
                                 self.cotxes[id_a].trajec.append(nou_centre)
                                 self.anterior.append((nou_centre, id_a))
+                                cv2.putText(frame, str(id_a), (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, 255, 2)
 
                                 
                             else:
@@ -91,13 +93,14 @@ class Repte2():
                                 c.trajec.append(nou_centre)
                                 self.cotxes[id] = c
                                 self.anterior.append((nou_centre, c.id))
+                                cv2.putText(frame, str(id), (x, y-10), cv2.FONT_HERSHEY_SIMPLEX, 0.9, 255, 2)
 
     def sentit(self, cotxe):
         if len(cotxe.trajec) > 25: # ha trobat cotxe en minim 5 frames
-            if self.dist_cent(cotxe.trajec[0], cotxe.trajec[-1])>0:
-                cotxe.sentit = 0
-            else:
+            if cotxe.trajec[0][1] < cotxe.trajec[-1][1]:
                 cotxe.sentit = 1
+            else:
+                cotxe.sentit = 0
 
 
 
