@@ -27,11 +27,11 @@ Possibles recomptes:
 - Comptar quan el cotxe ha passat per complet
 - Comptar quan el cotxe ha passat per la línia
 
-![Segon mètode - una línia](https://imgur.com/nfb5V7Y)
+![Segon mètode - una línia](https://i.imgur.com/nfb5V7Y.png)
 
 - Comptar quan el cotxe ha passat per les dues línies.
 
-![Tercer mètode - una línia](https://imgur.com/vggqwnw)
+![Tercer mètode - una línia](https://i.imgur.com/vggqwnw.png)
 
 
 
