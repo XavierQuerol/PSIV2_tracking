@@ -26,49 +26,50 @@ class Tracker():
 
 
     def recalculate(self, bboxes, frame):
-
-        if len(self.cotxes) == 0:
-            for i in range(bboxes.shape[0]):
-                self.nou_id += 1
-                id = self.nou_id
-                cotxe = Cotxe(x=bboxes[i,0], y=bboxes[i,1], x2=bboxes[i,2], y2=bboxes[i,3], id=id)
-                self.cotxes.append(cotxe)
-        else:
-            for cotxe in self.cotxes:
-                cotxe.show = False
-            
-            distances = self.calculate_distances(bboxes)
-            self.update_cars(distances, bboxes)
-
-        cotxes_delete = []       
-        for i, cotxe in enumerate(self.cotxes):
-            if cotxe.show==True:
-                cotxe.frames = 0
-                frame = self.paint_id(cotxe, frame)
-                if self.metode_comptar == "one_line":
-                    self.one_line(cotxe)
-                elif self.metode_comptar == "two_lines":
-                    self.two_lines(cotxe)
+        if len(bboxes)>0:
+            if len(self.cotxes) == 0:
+                for i in range(bboxes.shape[0]):
+                    self.nou_id += 1
+                    id = self.nou_id
+                    cotxe = Cotxe(x=bboxes[i,0], y=bboxes[i,1], x2=bboxes[i,2], y2=bboxes[i,3], id=id)
+                    self.cotxes.append(cotxe)
             else:
-                cotxe.frames += 1
-                if cotxe.frames >15:
-                    if self.metode_comptar == "c_final":
-                        self.c_final(cotxe)
-                    cotxes_delete.append(i)
+                for cotxe in self.cotxes:
+                    cotxe.show = False
+                
+                distances = self.calculate_distances(bboxes)
+                self.update_cars(distances, bboxes)
 
-        self.cotxes = [cotxe for i, cotxe in enumerate(self.cotxes) if i not in cotxes_delete]
+            cotxes_delete = []       
+            for i, cotxe in enumerate(self.cotxes):
+                if cotxe.show==True:
+                    cotxe.frames = 0
+                    frame = self.paint_id(cotxe, frame)
+                    if self.metode_comptar == "one_line":
+                        self.one_line(cotxe)
+                    elif self.metode_comptar == "two_lines":
+                        self.two_lines(cotxe)
+                else:
+                    cotxe.frames += 1
+                    if cotxe.frames >15:
+                        if self.metode_comptar == "c_final":
+                            self.c_final(cotxe)
+                        cotxes_delete.append(i)
+
+            self.cotxes = [cotxe for i, cotxe in enumerate(self.cotxes) if i not in cotxes_delete]
 
         if self.metode_comptar == "one_line":
-            frame = cv2.line(frame, (0,600), (539,600), 10)
+            frame = cv2.line(frame, (0,600), (539,600),(0,255,255), 10)
         elif self.metode_comptar == "two_lines":
-            frame = cv2.line(frame, (0,550), (539,550), 10)
-            frame = cv2.line(frame, (0,700), (539,700), 10)
+            frame = cv2.line(frame, (0,550), (539,550), (0,255,255), 10)
+            frame = cv2.line(frame, (0,700), (539,700), (0,255,255), 10)
         frame = cv2.putText(frame, f"Cotxes que han pujat: {self.COTXES_PUGEN}", (50, 50), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0,0,255), 2)
         frame = cv2.putText(frame, f"Cotxes que han baixat: {self.COTXES_BAIXEN}", (50, 100), cv2.FONT_HERSHEY_SIMPLEX, 0.9, (0,0,255), 2)
 
         cv2.imshow("frame", frame)
         k = cv2.waitKey(1) & 0xFF
 
+        return frame
 
     def calculate_distances(self, bboxes):
         
