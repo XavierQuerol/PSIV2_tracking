@@ -58,6 +58,6 @@ class Detect():
         for cnt in contours:
             x, y, w, h = cv2.boundingRect(cnt)
             if cv2.contourArea(cnt) > self.min_area and h<1.5*w: #and w>h:
-                cnts.append([x,y,w,h])
+                cnts.append([x,y,w+x,h+y])
         
         return cnts

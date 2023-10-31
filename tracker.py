@@ -69,8 +69,6 @@ class Tracker():
         cv2.imshow("frame", frame)
         k = cv2.waitKey(1) & 0xFF
 
-        return frame
-
     def calculate_distances(self, bboxes):
         
         cotxes_actuals = np.zeros((len(self.cotxes), 2))
