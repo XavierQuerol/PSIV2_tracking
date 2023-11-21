@@ -1,7 +1,7 @@
 # PSIV2_tracking
-En aquest respositori trobaré com fer el recompte de cotxes que passen per una via a partir d'un vídeo.
+En aquest respositori trobarem com fer el recompte de cotxes que passen per una via a partir d'un vídeo.
 
-A continaució s'hi exposarà l'estructura de codi i l'explicació de cada una de les parts.
+A continaució s'hi exposarà l'estructura de codi i l'explicació de cadascuna de les parts.
 
 ## Estructura
 ```
